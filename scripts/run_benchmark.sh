@@ -16,7 +16,7 @@ cargo run --release --features runtime-benchmarks -- benchmark \
   --steps=50 \
   --repeat=100 \
   --pallet="${pallet}" \
-  --extrinsic=* \
+  --extrinsic '\*' \
   --execution=wasm \
   --wasm-execution=compiled \
   --heap-pages=4096 \
