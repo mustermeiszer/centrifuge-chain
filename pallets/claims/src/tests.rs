@@ -88,10 +88,7 @@ fn verify_proofs() {
 			];
 
 			// Abuse DDoS attach check
-			assert_eq!(
-				Claims::verify_proofs(&USER_B, &amount, &sorted_hashes_long.to_vec()),
-				false
-			);
+			assert_eq!(Claims::verify_proofs(&sorted_hashes_long.to_vec()), false);
 
 			// Wrong sorted hashes for merkle tree
 			let one_sorted_hashes: [H256; 1] = [[0; 32].into()];

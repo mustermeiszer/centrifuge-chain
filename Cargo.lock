@@ -5276,6 +5276,7 @@ dependencies = [
  "pallet-crowdloan-reward",
  "pallet-vesting",
  "parity-scale-codec",
+ "proofs",
  "serde",
  "sp-core",
  "sp-io",

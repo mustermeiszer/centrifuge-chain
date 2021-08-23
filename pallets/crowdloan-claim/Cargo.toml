@@ -29,6 +29,7 @@ sp-std = { git = "https://github.com/centrifuge/substrate", default-features = f
 
 # Local dependencies
 trait-crowdloan-reward = { path= '../../libs/trait-crowdloan-reward', default_features = false }
+proofs = { path= '../../libs/proofs', default_features = false }
 
 [dev-dependencies]
 sp-io = { git = "https://github.com/centrifuge/substrate", default-features = false , branch = "master" }
@@ -42,6 +43,7 @@ hex = { version="0.4.3", default_features = false }
 [features]
 default = ['std']
 std = [
+  'proofs/std',
   'codec/std',
   'frame-support/std',
   'frame-system/std',

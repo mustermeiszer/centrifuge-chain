@@ -1,6 +1,10 @@
 //! # Optimized Merkle proof verifier and bundle hasher
 //!
 //! This pallet provides functionality of verifying optimized merkle proofs and bundle hasher.
+
+// Ensure we're `no_std` when compiling for WebAssembly.
+#![cfg_attr(not(feature = "std"), no_std)]
+
 use codec::{Decode, Encode};
 use sp_std::{fmt::Debug, vec::Vec};
 
@@ -24,14 +28,18 @@ impl<Hash> Proof<Hash> {
 			sorted_hashes,
 		}
 	}
+
+	pub fn len(&self) -> usize {
+		self.sorted_hashes.len()
+	}
 }
 
 pub trait Hasher: Sized {
 	/// Hash type we deal with
-	type Hash: Default + AsRef<[u8]> + From<[u8; 32]> + Copy + PartialEq + PartialOrd + Debug;
+	type Hash: Default + AsRef<[u8]> + Copy + PartialEq + PartialOrd + Debug;
 
 	/// Hashes given data to 32 byte u8. Ex: blake256, Keccak
-	fn hash(data: &[u8]) -> [u8; 32];
+	fn hash(data: &[u8]) -> Self::Hash;
 }
 
 pub trait Verifier: Hasher {
