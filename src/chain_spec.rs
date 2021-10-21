@@ -260,7 +260,7 @@ pub fn altair_dev(para_id: ParaId) -> AltairChainSpec {
 					// 	.unchecked_into(),
 				)],
 				endowed_accounts(),
-				Some(10_000_000_000 * CFG),
+				None,
 				para_id,
 			)
 		},
