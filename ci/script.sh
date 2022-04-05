@@ -29,7 +29,7 @@ case $TARGET in
     ;;
 
   tests-integration)
-    RUST_MIN_STACK=8388608 cargo test --release --package integration-tests
+    cargo test --release --package integration-tests
     ;;
 
   lint)
