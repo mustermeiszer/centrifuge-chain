@@ -1,6 +1,6 @@
 #![cfg(feature = "runtime-benchmarks")]
 use super::*;
-use frame_benchmarking::{benchmarks, impl_benchmark_test_suite};
+use frame_benchmarking::benchmarks;
 use frame_support::StorageHasher;
 use frame_support::Twox128;
 use frame_system::RawOrigin;

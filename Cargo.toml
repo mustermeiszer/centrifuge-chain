@@ -117,7 +117,6 @@ frame-benchmarking-cli = { git = "https://github.com/paritytech/substrate", bran
 node-inspect = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.17" }
 
 # frame dependencies
-pallet-anchors = { path = "./pallets/anchors", default-features = false }
 pallet-transaction-payment-rpc = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.17" }
 substrate-frame-rpc-system  = { git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.17" }
 pallet-im-online = { default-features = false, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.17" }
@@ -150,6 +149,25 @@ node-primitives = { git = "https://github.com/paritytech/substrate", branch = "p
 # benchmarking
 frame-benchmarking = { git = "https://github.com/paritytech/substrate", optional = true, branch = "polkadot-v0.9.17" }
 
+# own pallets as optionals needed when running tests with feature flags
+pallet-anchors = { path = "./pallets/anchors", optional = false, default-features = true }
+pallet-bridge = { path = "./pallets/bridge", optional = true }
+pallet-bridge-mapping = { path = "./pallets/bridge-mapping", optional = true }
+pallet-claims = { path = "./pallets/claims", optional = true }
+pallet-collator-allowlist = { path = "./pallets/collator-allowlist", optional = true }
+pallet-crowdloan-claim = { path = "./pallets/crowdloan-claim", optional = true }
+pallet-crowdloan-reward = { path = "./pallets/crowdloan-reward", optional = true }
+pallet-fees = { path = "./pallets/fees", optional = true }
+pallet-loans = { path = "./pallets/loans", optional = true }
+pallet-migration-manager = { path = "./pallets/migration", optional = true }
+pallet-nft = { path = "./pallets/nft", optional = true }
+pallet-nft-sales = { path = "./pallets/nft-sales", optional = true }
+pallet-permissions = { path = "./pallets/permissions", optional = true }
+pallet-pools = { path = "./pallets/pools", optional = true }
+# pallet-registry = { path = "./pallets/registry", optional = true }
+pallet-restricted-tokens = { path = "./pallets/restricted-tokens", optional = true }
+runtime-integration-tests = { path = "./runtime/integration-tests", optional = true }
+
 [build-dependencies]
 vergen = "3.0.4"
 substrate-build-script-utils  = { optional = true, git = "https://github.com/paritytech/substrate", branch = "polkadot-v0.9.17" }
@@ -173,4 +191,27 @@ runtime-benchmarks = [
 	"altair-runtime/runtime-benchmarks",
 	"centrifuge-runtime/runtime-benchmarks",
 	"development-runtime/runtime-benchmarks",
+]
+tests-with-runtime-benchmarks = [
+	"frame-benchmarking/runtime-benchmarks",
+	"altair-runtime/runtime-benchmarks",
+	"centrifuge-runtime/runtime-benchmarks",
+	"development-runtime/runtime-benchmarks",
+	# "anchors/runtime-benchmarks", No-benchmarks
+	"pallet-bridge/runtime-benchmarks",
+	# "bridge-mapping/runtime-benchmarks", No-benchmarks
+	# "claims/runtime-benchmarks", No-benchmarks
+	"pallet-collator-allowlist/runtime-benchmarks",
+	"pallet-crowdloan-claim/runtime-benchmarks",
+	"pallet-crowdloan-reward/runtime-benchmarks",
+	"pallet-fees/runtime-benchmarks",
+	"pallet-loans/runtime-benchmarks",
+	"pallet-migration-manager/runtime-benchmarks",
+	"pallet-nft/runtime-benchmarks",
+	"pallet-nft-sales/runtime-benchmarks",
+	"pallet-permissions/runtime-benchmarks",
+	"pallet-pools/runtime-benchmarks",
+	# "registry/runtime-benchmarks", No-pallet
+	"pallet-restricted-tokens/runtime-benchmarks",
+	"runtime-integration-tests/runtime-benchmarks"
 ]
