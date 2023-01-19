@@ -47,9 +47,8 @@ async fn test() {
 
 			let mut nft_manager = NftManager::new();
 			let set_default_pool = default_pool_calls(pool_admin.clone(), 0, &mut nft_manager);
-			let set_loans_for_pools = init_loans_for_pool(borrower.clone(), 0, &mut nft_manager);
 			let issue_default_loans = issue_default_loan(
-				borrower.clone(),
+				pool_admin.clone(),
 				0,
 				10_000 * 10_000_000_000,
 				90 * 60 * 60 * 24,
@@ -66,22 +65,26 @@ async fn test() {
 			for call in issue_default_loans {
 				let res = UnfilteredDispatchable::dispatch_bypass_filter(
 					call,
-					RuntimeOrigin::signed(borrower.clone()),
+					RuntimeOrigin::signed(pool_admin.clone()),
 				);
 				assert_ok!(res);
 			}
 
-			// set timestamp to around 1 year
-			let now = development_runtime::Timestamp::now();
-			let after_one_year = now + 31_536_000 * 1000;
-			set_block_number_timestamp::<Runtime>(Default::default(), after_one_year.into());
+			// TODO: * invest via pallet investemnts INTO JUNIOR TRANCHE solely(investors should be whitelisted automatically)
+			//       * close and execute epoch
 
 			let borrow_call = UnfilteredDispatchable::dispatch_bypass_filter(
-				borrow_call(0, LoanId::from(0_u16), 100_000),
-				RuntimeOrigin::signed(borrower.clone()),
+				borrow_call(0, LoanId::from(1_u16), 100_000),
+				RuntimeOrigin::signed(pool_admin.clone()),
 			);
 
 			assert_ok!(borrow_call);
+
+			// set timestamp to around 1 year
+			let now = development_runtime::Timestamp::now();
+			let after_one_year = now + 31_536_000 * 1000;
+			pallet_timestamp::Now::<Runtime>::set(after_one_year.into());
+
 			// let max_borrow_amount = development_runtime::Loans::get_max_borrow_amount(0, LoanId::from(0_u16));
 			// assert_eq!(max_borrow_amount, Ok(0));
 		})
@@ -92,6 +95,6 @@ async fn test() {
 			let max_borrow_amount = api
 				.max_borrow_amount(&latest, 0, LoanId::from(0_u16))
 				.unwrap();
-			assert_eq!(max_borrow_amount, Ok(0));
+			assert_eq!(max_borrow_amount, Some(0));
 		});
 }
