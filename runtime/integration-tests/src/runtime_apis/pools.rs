@@ -123,13 +123,14 @@ async fn test() {
 			let now = development_runtime::Timestamp::now();
 			let after_one_year = now + SECONDS_PER_YEAR;
 			pallet_timestamp::Now::<Runtime>::set(after_one_year.into());
+			centrifuge::InterestAccrual::on_initialize(0);
 
 			// let max_borrow_amount = development_runtime::Loans::get_max_borrow_amount(0, LoanId::from(0_u16));
 			// assert_eq!(max_borrow_amount, Ok(0));
 		})
 		.with_api(|api, latest| {
 			let valuation = api.portfolio_valuation(&latest, POOL_ID).unwrap();
-			assert_eq!(valuation, Some(11836407882999939));
+			assert_eq!(valuation, Some(11838183477344413));
 
 			// None existing loan is None
 			let max_borrow_amount = api
